@@ -15,9 +15,9 @@ class Matrix(m: Array<Array<Float>>) {
             return Matrix(emptyArray())
         }
 
-        for (i in 0..matrix1.rows - 1) {
+        for (i in 0 until matrix1.rows) {
             for (j in matrix[0].indices) {
-                for (k in 0..matrix1.columns - 1) {
+                for (k in 0 until matrix1.columns) {
                     matrixOut[i][j] += matrix1.get(i, k) * matrix[k][j]
                 }
             }
@@ -56,12 +56,12 @@ class Matrix(m: Array<Array<Float>>) {
         get() {
             var out = ""
 
-            for (row in matrix){
+            for (row in matrix) {
                 out += "{ "
-                for (column in row){
+                for (column in row) {
                     out += "$column, "
                 }
-                out = out.slice(0..out.length-3)
+                out = out.slice(0..out.length - 3)
                 out += " }\n"
             }
 
