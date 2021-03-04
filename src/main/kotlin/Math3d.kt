@@ -43,9 +43,7 @@ fun worldToScreenPoint(rotX: Double, rotY: Double, rotZ: Double, pos: Array<Arra
 
 fun matmul(matrix1: Array<Array<Float>>, matrix2: Array<Array<Float>>): Array<Array<Float>> {
     val matrixOut : Array<Array<Float>> = emptyArray()
-    for (i in 0..matrix1.size){
-        matrixOut.apply { FloatArray(matrix2[0].size) }
-    }
+
 
     if (matrix1[0].size != matrix2.size) {
         println("Columns of matrix 1 must match rows of matrix 2")
@@ -53,7 +51,9 @@ fun matmul(matrix1: Array<Array<Float>>, matrix2: Array<Array<Float>>): Array<Ar
     }
 
     for (i in 0..matrix1.size) {
+        matrixOut.apply {emptyArray<Float>()}
         for (j in 0..matrix2[0].size) {
+            matrixOut[j].apply { 0f }
             for (k in 0..matrix1[0].size) {
                 matrixOut[i][j] += matrix1[i][k] * matrix2[k][j]
             }
