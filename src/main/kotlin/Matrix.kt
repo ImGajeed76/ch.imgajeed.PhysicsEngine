@@ -1,9 +1,14 @@
 class Matrix(m: Array<Array<Float>>) {
     var matrix: Array<Array<Float>> = m
 
-    fun get(row: Int, column: Int): Float {
+    operator fun get(row: Int, column: Int): Float {
 
         return matrix[row][column]
+    }
+
+    operator fun get(row: Int): Array<Float> {
+
+        return matrix[row]
     }
 
     fun matmul(matrix1: Matrix): Matrix {
@@ -50,6 +55,18 @@ class Matrix(m: Array<Array<Float>>) {
 
     fun divide(row: Int, column: Int, float: Float) {
         matrix[row][column] /= float
+    }
+
+    fun apply(array: Array<Float>) {
+        matrix.apply { array }
+    }
+
+    fun apply(row: Int, float: Float) {
+        matrix[row].apply { float }
+    }
+
+    fun set(row: Int, column: Int, float: Float){
+        matrix[row][column] = float
     }
 
     val toString: String
