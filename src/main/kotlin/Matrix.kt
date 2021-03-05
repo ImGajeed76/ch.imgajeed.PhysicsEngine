@@ -1,5 +1,4 @@
-class Matrix(m: ArrayList<ArrayList<Float>>) {
-    var matrix: ArrayList<ArrayList<Float>> = m
+class Matrix(var matrix: ArrayList<ArrayList<Float>>) {
 
     operator fun get(row: Int, column: Int): Float {
 
@@ -25,7 +24,7 @@ class Matrix(m: ArrayList<ArrayList<Float>>) {
         for (i in 0 until matrix1.rows) {
             for (j in matrix[0].indices) {
                 for (k in 0 until matrix1.columns) {
-                    matrixOut[i][j] += matrix1.get(i, k) * matrix[k][j]
+                    matrixOut[i][j] += matrix1[i, k] * matrix[k][j]
                 }
             }
         }

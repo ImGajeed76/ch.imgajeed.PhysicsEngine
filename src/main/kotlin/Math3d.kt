@@ -2,8 +2,8 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 fun worldToScreenPoint(rotX: Double, rotY: Double, rotZ: Double, pos: Matrix): Matrix {
-    val hWidth: Float = SCREEN_WIDTH / 2
-    val hHeight: Float = SCREEN_HEIGHT / 2
+    val hWidth: Int = SCREEN_WIDTH / 2
+    val hHeight: Int = SCREEN_HEIGHT / 2
 
     val rotationX = Matrix(
         arrayOf(
@@ -34,17 +34,16 @@ fun worldToScreenPoint(rotX: Double, rotY: Double, rotZ: Double, pos: Matrix): M
     rotated = rotated.matmul(rotationZ)
 
     val projection = Matrix(
-        arrayOf(
-            arrayOf(1f, 0f, 0f).toCollection(ArrayList()),
-            arrayOf(0f, 1f, 0f).toCollection(ArrayList()),
-            arrayOf(0f, 0f, 0f).toCollection(ArrayList())
-        ).toCollection(ArrayList())
+        arrayListOf(
+            arrayListOf(1f, 0f, 0f),
+            arrayListOf(0f, 1f, 0f)
+        )
     )
 
     val point2d = rotated.matmul(projection)
 
-    point2d.add(0, 0, hWidth)
-    point2d.add(1, 0, hHeight)
+    point2d.add(0, 0, hWidth.toFloat())
+    point2d.add(1, 0, hHeight.toFloat())
 
     return point2d
 }

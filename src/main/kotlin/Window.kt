@@ -12,8 +12,9 @@ class Window(width: Int, height: Int, title: String) {
     var panel = Panel2(this)
 
     var lines: Matrix = Matrix(arrayListOf())
+    var dots: Matrix = Matrix(arrayListOf())
 
-    fun init() {
+    init {
         frame.title = title
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         frame.size = Dimension(width, height)
@@ -30,8 +31,24 @@ class Window(width: Int, height: Int, title: String) {
 
     fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float) {
         lines.apply(arrayListOf(x1, y1, x2, y2))
-        print(lines.toString)
-        update()
+    }
+
+    fun drawLine(p1: Matrix, p2: Matrix) {
+        lines.apply(arrayListOf(p1[0, 0], p1[1, 0], p2[0, 0], p2[1, 0]))
+    }
+
+    fun drawTriangle(p1: Matrix, p2: Matrix, p3: Matrix) {
+        drawLine(p1, p2)
+        drawLine(p2, p3)
+        drawLine(p3, p1)
+    }
+
+    fun drawDot(x: Float, y: Float, size: Float = 4f) {
+        dots.apply(arrayListOf(x - size / 2, y - size / 2, size))
+    }
+
+    fun drawDot(p: Matrix, size: Float) {
+        dots.apply(arrayListOf(p[0][0] - (size / 2), p[1][0] - (size / 2), size))
     }
 
     class Panel2(window: Window) : JPanel() {
@@ -39,9 +56,17 @@ class Window(width: Int, height: Int, title: String) {
 
         override fun paintComponent(g: Graphics) {
             super.paintComponent(g)
+
             for (line in this.frame.lines.matrix) {
                 g.drawLine(line[0].toInt(), line[1].toInt(), line[2].toInt(), line[3].toInt())
             }
+
+            for (dot in this.frame.dots.matrix) {
+                g.fillRoundRect(dot[0].toInt(), dot[1].toInt(), dot[2].toInt(), dot[2].toInt(), 0, 0)
+            }
+
+            this.frame.lines = Matrix(arrayListOf())
+            this.frame.dots = Matrix(arrayListOf())
         }
     }
 }
