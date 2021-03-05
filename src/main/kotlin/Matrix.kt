@@ -1,23 +1,25 @@
-class Matrix(m: Array<Array<Float>>) {
-    var matrix: Array<Array<Float>> = m
+class Matrix(m: ArrayList<ArrayList<Float>>) {
+    var matrix: ArrayList<ArrayList<Float>> = m
 
     operator fun get(row: Int, column: Int): Float {
 
         return matrix[row][column]
     }
 
-    operator fun get(row: Int): Array<Float> {
+    operator fun get(row: Int): ArrayList<Float> {
 
         return matrix[row]
     }
 
     fun matmul(matrix1: Matrix): Matrix {
-        val matrixOut = Array(size = matrix1.rows, init = { Array(size = matrix[0].size, init = { 0f }) })
+        val matrixOut = Array(
+            size = matrix1.rows,
+            init = { Array(size = matrix[0].size, init = { 0f }).toCollection(ArrayList()) }).toCollection(ArrayList())
 
 
         if (matrix1.columns != matrix.size) {
             println("Columns of matrix 1 must match rows of current matrix")
-            return Matrix(emptyArray())
+            return Matrix(arrayListOf())
         }
 
         for (i in 0 until matrix1.rows) {
@@ -57,15 +59,15 @@ class Matrix(m: Array<Array<Float>>) {
         matrix[row][column] /= float
     }
 
-    fun apply(array: Array<Float>) {
-        matrix.apply { array }
+    fun apply(array: ArrayList<Float>) {
+        matrix.add(array)
     }
 
     fun apply(row: Int, float: Float) {
-        matrix[row].apply { float }
+        matrix[row].add(float)
     }
 
-    fun set(row: Int, column: Int, float: Float){
+    fun set(row: Int, column: Int, float: Float) {
         matrix[row][column] = float
     }
 

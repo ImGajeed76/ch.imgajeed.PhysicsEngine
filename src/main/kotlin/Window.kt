@@ -11,7 +11,7 @@ class Window(width: Int, height: Int, title: String) {
     var frame = JFrame()
     var panel = Panel2(this)
 
-    var lines: Matrix = Matrix(emptyArray())
+    var lines: Matrix = Matrix(arrayListOf())
 
     fun init() {
         frame.title = title
@@ -29,7 +29,7 @@ class Window(width: Int, height: Int, title: String) {
     }
 
     fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float) {
-        lines.apply(arrayOf(x1, y1, x2, y2))
+        lines.apply(arrayListOf(x1, y1, x2, y2))
         print(lines.toString)
         update()
     }
