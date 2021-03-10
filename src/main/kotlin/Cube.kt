@@ -48,56 +48,64 @@ class Cube {
                     arrayListOf(
                         arrayListOf(x - halfWidth),
                         arrayListOf(y - halfHeight),
-                        arrayListOf(z + halfDepth)
+                        arrayListOf(z + halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x - halfWidth),
                         arrayListOf(y - halfHeight),
-                        arrayListOf(z - halfDepth)
+                        arrayListOf(z - halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x - halfWidth),
                         arrayListOf(y + halfHeight),
-                        arrayListOf(z - halfDepth)
+                        arrayListOf(z - halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x - halfWidth),
                         arrayListOf(y + halfHeight),
-                        arrayListOf(z + halfDepth)
+                        arrayListOf(z + halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x + halfWidth),
                         arrayListOf(y - halfHeight),
-                        arrayListOf(z + halfDepth)
+                        arrayListOf(z + halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x + halfWidth),
                         arrayListOf(y - halfHeight),
-                        arrayListOf(z - halfDepth)
+                        arrayListOf(z - halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x + halfWidth),
                         arrayListOf(y + halfHeight),
-                        arrayListOf(z - halfDepth)
+                        arrayListOf(z - halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
                 Matrix(
                     arrayListOf(
                         arrayListOf(x + halfWidth),
                         arrayListOf(y + halfHeight),
-                        arrayListOf(z + halfDepth)
+                        arrayListOf(z + halfDepth),
+                        arrayListOf(1f)
                     )
                 ),
             )
@@ -105,11 +113,11 @@ class Cube {
 
     val points2d: ArrayList<Matrix>
         get() {
-            val points2d: ArrayList<Matrix> = arrayListOf()
+            val points2d: ArrayList<Matrix<Float>> = arrayListOf()
             val points3d = points3d
 
             for (i in 0 until points3d.size) {
-                points2d.add(worldToScreenPoint(rotX, rotZ, rotY, points3d[i]))
+                points2d.add(worldToScreenPoint(cam, points3d[i]))
             }
 
             return points2d
