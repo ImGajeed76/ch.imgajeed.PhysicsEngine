@@ -13,18 +13,14 @@ import kotlin.math.sin
 
 
 class Window(width: Int, height: Int, title: String) : Runnable {
-    val width = width
-    val height = height
-    val title = title
-
-    val robot = Robot()
+    private val robot = Robot()
     var catchMouse = false
 
-    var frame = JFrame()
-    var panel = Panel2(this)
+    private var frame = JFrame()
+    private var panel = Panel2(this)
 
-    var lines: Matrix<Float> = Matrix(arrayListOf())
-    var dots: Matrix<Float> = Matrix(arrayListOf())
+    private var lines: Matrix<Float> = Matrix(arrayListOf())
+    private var dots: Matrix<Float> = Matrix(arrayListOf())
 
     val shapes: ArrayList<Shape> = arrayListOf()
 
@@ -38,23 +34,11 @@ class Window(width: Int, height: Int, title: String) : Runnable {
         frame.addMouseMotionListener(object : MouseMotionListener {
             override fun mouseDragged(e: MouseEvent) {
                 catchMouse = true
-                if (catchMouse) {
-                    val x = (e.x - (SCREEN_WIDTH / 2))
-                    val y = (e.y - (SCREEN_HEIGHT / 2))
-                    cam.rotY += x.toFloat() / 1000
-                    cam.rotX += y.toFloat() / 1000
-                    robot.mouseMove(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-                }
+                moveMouse(e)
             }
 
             override fun mouseMoved(e: MouseEvent) {
-                if (catchMouse) {
-                    val x = (e.x - (SCREEN_WIDTH / 2))
-                    val y = (e.y - (SCREEN_HEIGHT / 2))
-                    cam.rotY += x.toFloat() / 1000
-                    cam.rotX += y.toFloat() / 1000
-                    robot.mouseMove(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-                }
+                moveMouse(e)
             }
         })
 
@@ -63,26 +47,34 @@ class Window(width: Int, height: Int, title: String) : Runnable {
                 val keyCode = e.keyCode
                 catchMouse = true
 
-                if (keyCode == KeyEvent.VK_W) {
-                    cam.locX -= SPEED * sin(-cam.rotY)
-                    cam.locZ -= SPEED * -cos(-cam.rotY)
-                    cam.locY -= SPEED * sin(-cam.rotX)
-                } else if (keyCode == KeyEvent.VK_S) {
-                    cam.locX += SPEED * sin(-cam.rotY)
-                    cam.locZ += SPEED * -cos(-cam.rotY)
-                    cam.locY += SPEED * sin(-cam.rotX)
-                } else if (keyCode == KeyEvent.VK_A) {
-                    cam.locZ += SPEED * sin(cam.rotY)
-                    cam.locX += SPEED * -cos(cam.rotY)
-                } else if (keyCode == KeyEvent.VK_D) {
-                    cam.locZ -= SPEED * sin(cam.rotY)
-                    cam.locX -= SPEED * -cos(cam.rotY)
-                } else if (keyCode == KeyEvent.VK_SPACE) {
-                    cam.locY -= SPEED
-                } else if (keyCode == KeyEvent.VK_SHIFT) {
-                    cam.locY += SPEED
-                } else if (keyCode == KeyEvent.VK_ESCAPE) {
-                    catchMouse = false
+                when (keyCode) {
+                    KeyEvent.VK_W -> {
+                        cam.locX -= SPEED * sin(-cam.rotY)
+                        cam.locZ -= SPEED * -cos(-cam.rotY)
+                        cam.locY -= SPEED * sin(-cam.rotX)
+                    }
+                    KeyEvent.VK_S -> {
+                        cam.locX += SPEED * sin(-cam.rotY)
+                        cam.locZ += SPEED * -cos(-cam.rotY)
+                        cam.locY += SPEED * sin(-cam.rotX)
+                    }
+                    KeyEvent.VK_A -> {
+                        cam.locZ += SPEED * sin(cam.rotY)
+                        cam.locX += SPEED * -cos(cam.rotY)
+                    }
+                    KeyEvent.VK_D -> {
+                        cam.locZ -= SPEED * sin(cam.rotY)
+                        cam.locX -= SPEED * -cos(cam.rotY)
+                    }
+                    KeyEvent.VK_SPACE -> {
+                        cam.locY -= SPEED
+                    }
+                    KeyEvent.VK_SHIFT -> {
+                        cam.locY += SPEED
+                    }
+                    KeyEvent.VK_ESCAPE -> {
+                        catchMouse = false
+                    }
                 }
             }
 
@@ -99,6 +91,16 @@ class Window(width: Int, height: Int, title: String) : Runnable {
         frame.invalidate()
         frame.validate()
         frame.repaint()
+    }
+
+    fun moveMouse(e: MouseEvent){
+        if (catchMouse) {
+            val x = (e.x - (SCREEN_WIDTH / 2))
+            val y = (e.y - (SCREEN_HEIGHT / 2))
+            cam.rotY += x.toFloat() / 1000
+            cam.rotX += y.toFloat() / 1000
+            robot.mouseMove(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        }
     }
 
     fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float) {
@@ -133,7 +135,7 @@ class Window(width: Int, height: Int, title: String) : Runnable {
     }
 
     class Panel2(window: Window) : JPanel() {
-        val frame = window
+        private val frame = window
 
         override fun paintComponent(g: Graphics) {
             super.paintComponent(g)

@@ -101,18 +101,18 @@ fun worldToScreenPoint(
 
         val fTrans = rotated.multiply(forTrans)
 
-        var trans = fTrans.multiply(transformation)
+        val trans = fTrans.multiply(transformation)
 
         var camRot = trans.multiply(camRotZ)
         camRot = camRot.multiply(camRotY)
         camRot = camRot.multiply(camRotX)
 
-        val z = camRot[2][0] / 1000
+        val newZ = camRot[2][0] / 1000
 
         val projection = Matrix(
 
-            arrayListOf(1f / z, 0f, 0f, 0f),
-            arrayListOf(0f, 1f / z, 0f, 0f),
+            arrayListOf(1f / newZ, 0f, 0f, 0f),
+            arrayListOf(0f, 1f / newZ, 0f, 0f),
             arrayListOf(0f, 0f, 1f, 0f),
             arrayListOf(0f, 0f, 0f, 1f)
 

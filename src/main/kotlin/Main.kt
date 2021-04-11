@@ -1,9 +1,3 @@
-import org.imgajeed.matrix.Matrix
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import javax.swing.JFrame
-
-
 const val SCREEN_WIDTH: Int = 1024
 const val SCREEN_HEIGHT: Int = 768
 val frame: Window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, "PhysicsEngine")
