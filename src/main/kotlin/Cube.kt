@@ -117,7 +117,18 @@ class Cube {
             val points3d = points3d
 
             for (i in 0 until points3d.size) {
-                points2d.add(worldToScreenPoint(cam, points3d[i]))
+                points2d.add(
+                    worldToScreenPoint(
+                        this.rotX.toFloat(),
+                        this.rotY.toFloat(),
+                        this.rotZ.toFloat(),
+                        cam,
+                        points3d[i],
+                        x,
+                        y,
+                        z
+                    )
+                )
             }
 
             return points2d
@@ -136,6 +147,8 @@ class Cube {
         for (point2d in points2d) {
             frame.drawDot(point2d, 4f)
         }
+
+
 
         for (i in 0 until 4) {
             frame.drawLine(points2d[i], points2d[(i + 1) % 4])
