@@ -1,16 +1,12 @@
 import org.imgajeed.matrix.Matrix
-import java.awt.*
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import java.awt.event.MouseEvent
-import java.awt.event.MouseMotionListener
+import java.awt.Graphics
+import java.awt.GraphicsDevice
+import java.awt.MouseInfo
 import javax.swing.JFrame
 import javax.swing.JPanel
-import kotlin.math.cos
-import kotlin.math.sin
 
 
-class Window(width: Int, height: Int, title: String, f:JFrame = JFrame()) : Runnable {
+class Window(width: Int, height: Int, title: String, f: JFrame = JFrame()) : Runnable {
 
     private var frame = JFrame()
     private var panel = Panel2(this)
@@ -85,17 +81,6 @@ class Window(width: Int, height: Int, title: String, f:JFrame = JFrame()) : Runn
             for (shape in frame.shapes) {
                 shape.draw(g)
             }
-
-//            for (line in this.frame.lines.matrix) {
-//                g.drawLine(line[0].toInt(), line[1].toInt(), line[2].toInt(), line[3].toInt())
-//            }
-//
-//            for (dot in this.frame.dots.matrix) {
-//                g.fillRoundRect(dot[0].toInt(), dot[1].toInt(), dot[2].toInt(), dot[2].toInt(), 0, 0)
-//            }
-//
-//            this.frame.lines = Matrix(arrayListOf())
-//            this.frame.dots = Matrix(arrayListOf())
         }
     }
 }
