@@ -1,7 +1,5 @@
 import org.imgajeed.matrix.Matrix
-import java.awt.Dimension
-import java.awt.Graphics
-import java.awt.Robot
+import java.awt.*
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
@@ -12,12 +10,12 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 
-class Window(width: Int, height: Int, title: String) : Runnable {
-    private val robot = Robot()
-    var catchMouse = false
+class Window(width: Int, height: Int, title: String, f:JFrame = JFrame()) : Runnable {
 
     private var frame = JFrame()
     private var panel = Panel2(this)
+
+    var gd: GraphicsDevice = MouseInfo.getPointerInfo().device
 
     private var lines: Matrix<Float> = Matrix(arrayListOf())
     private var dots: Matrix<Float> = Matrix(arrayListOf())
@@ -25,82 +23,27 @@ class Window(width: Int, height: Int, title: String) : Runnable {
     val shapes: ArrayList<Shape> = arrayListOf()
 
     init {
+        frame = f
         frame.title = title
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        frame.size = Dimension(width, height)
+        frame.setBounds(0, 0, width, height)
         frame.add(panel)
+        frame.isResizable = false
         frame.isVisible = true
-
-        frame.addMouseMotionListener(object : MouseMotionListener {
-            override fun mouseDragged(e: MouseEvent) {
-                catchMouse = true
-                moveMouse(e)
-            }
-
-            override fun mouseMoved(e: MouseEvent) {
-                moveMouse(e)
-            }
-        })
-
-        frame.addKeyListener(object : KeyListener {
-            override fun keyPressed(e: KeyEvent) {
-                val keyCode = e.keyCode
-                catchMouse = true
-
-                when (keyCode) {
-                    KeyEvent.VK_W -> {
-                        cam.locX -= SPEED * sin(-cam.rotY)
-                        cam.locZ -= SPEED * -cos(-cam.rotY)
-                        cam.locY -= SPEED * sin(-cam.rotX)
-                    }
-                    KeyEvent.VK_S -> {
-                        cam.locX += SPEED * sin(-cam.rotY)
-                        cam.locZ += SPEED * -cos(-cam.rotY)
-                        cam.locY += SPEED * sin(-cam.rotX)
-                    }
-                    KeyEvent.VK_A -> {
-                        cam.locZ += SPEED * sin(cam.rotY)
-                        cam.locX += SPEED * -cos(cam.rotY)
-                    }
-                    KeyEvent.VK_D -> {
-                        cam.locZ -= SPEED * sin(cam.rotY)
-                        cam.locX -= SPEED * -cos(cam.rotY)
-                    }
-                    KeyEvent.VK_SPACE -> {
-                        cam.locY -= SPEED
-                    }
-                    KeyEvent.VK_SHIFT -> {
-                        cam.locY += SPEED
-                    }
-                    KeyEvent.VK_ESCAPE -> {
-                        catchMouse = false
-                    }
-                }
-            }
-
-            override fun keyReleased(e: KeyEvent) {
-            }
-
-            override fun keyTyped(e: KeyEvent) {
-            }
-        })
+        gd = frame.graphicsConfiguration.device
+        SCREEN_WIDTH = gd.displayMode.width + 16
+        SCREEN_HEIGHT = gd.displayMode.height + 9
     }
 
     fun update() {
+        gd = frame.graphicsConfiguration.device
+        SCREEN_WIDTH = gd.displayMode.width + 8
+        SCREEN_HEIGHT = gd.displayMode.height + 8
+        frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
         panel = Panel2(this)
         frame.invalidate()
         frame.validate()
         frame.repaint()
-    }
-
-    fun moveMouse(e: MouseEvent){
-        if (catchMouse) {
-            val x = (e.x - (SCREEN_WIDTH / 2))
-            val y = (e.y - (SCREEN_HEIGHT / 2))
-            cam.rotY += x.toFloat() / 1000
-            cam.rotX += y.toFloat() / 1000
-            robot.mouseMove(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        }
     }
 
     fun drawLine(x1: Float, y1: Float, x2: Float, y2: Float) {

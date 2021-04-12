@@ -1,7 +1,9 @@
-const val SCREEN_WIDTH: Int = 1024
-const val SCREEN_HEIGHT: Int = 768
-val frame: Window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, "PhysicsEngine")
+import javax.swing.JFrame
+
+var SCREEN_WIDTH: Int = 1000
+var SCREEN_HEIGHT: Int = 700
 val cam: Camera = Camera()
+val frame: Window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, "PhysicsEngine", cam.addFrame(JFrame()))
 var angle = 0f
 const val SPEED: Float = 5f
 
@@ -19,7 +21,6 @@ fun main() {
 
 
     while (true) {
-
         frame.update()
         angle += 0.0001f
     }
