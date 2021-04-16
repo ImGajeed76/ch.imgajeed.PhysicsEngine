@@ -1,4 +1,3 @@
-import org.imgajeed.matrix.Matrix
 import java.awt.Graphics
 import java.awt.GraphicsDevice
 import java.awt.MouseInfo
@@ -66,10 +65,14 @@ class Window(width: Int, height: Int, title: String, f: JFrame = JFrame()) : Run
 
     override fun run() {
         while (true) {
-            this.panel = Panel2(this)
-            this.frame.invalidate()
-            this.frame.validate()
-            this.frame.repaint()
+            gd = frame.graphicsConfiguration.device
+            SCREEN_WIDTH = gd.displayMode.width + 8
+            SCREEN_HEIGHT = gd.displayMode.height + 8
+            frame.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+            panel = Panel2(this)
+            frame.invalidate()
+            frame.validate()
+            frame.repaint()
         }
     }
 
