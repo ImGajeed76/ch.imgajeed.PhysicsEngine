@@ -44,4 +44,4 @@ Requires Kotlin and Java. Built with Gradle.
 
 ## Author
 
-Oliver Seifert ([@ImGajeed76](https://github.com/ImGajeed76)) - March 2021
+[Oliver Seifert](https://oseifert.ch) ([@ImGajeed76](https://github.com/ImGajeed76)) - March 2021
